@@ -1,0 +1,28 @@
+<RCC>
+    <qresource prefix="/">
+        <file>play_active.png</file>
+        <file>play_deactive.png</file>
+        <file>single_play_active.png</file>
+        <file>single_play_deactive.png</file>
+        <file>stop_active.png</file>
+        <file>stop_deactive.png</file>
+        <file>zoom.png</file>
+        <file>zoomDown.png</file>
+        <file>zoomUp.png</file>
+        <file>redo_disable.png</file>
+        <file>redo_enable.png</file>
+        <file>undo_disable.png</file>
+        <file>undo_enable.png</file>
+        <file>grid_off.png</file>
+        <file>grid_on.png</file>
+        <file>location.png</file>
+        <file>bufferSizeAndFocus.png</file>
+        <file>fall_front.png</file>
+        <file>rise_front.png</file>
+        <file>under_level.png</file>
+        <file>upper_level.png</file>
+        <file>triggers.png</file>
+        <file>signals.png</file>
+        <file>view.png</file>
+    </qresource>
+</RCC>
