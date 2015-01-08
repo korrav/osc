@@ -186,4 +186,5 @@ signals:
     void enableRedo(bool);
 };
 
+
 #endif // SCREEN_H

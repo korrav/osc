@@ -22,7 +22,7 @@ bool RiseTrigger::check(const PUnit& cur)
     }
     if(pcurChanData->second >= lev_) {
         isInit_ = false;
-        qDebug() << "Сработало триггреное Rise условие";
+        qDebug() << "Сработало триггерное Rise условие";
         return true;
     }
     return false;

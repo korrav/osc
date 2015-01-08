@@ -14,6 +14,8 @@ ClipBoard::ClipBoard(QObject *parent): QThread(parent), rQ_(DEFAULT_NUM_ELEM_RQ)
 ClipBoard::~ClipBoard()
 {
     delete wrTask_;
+    quit();
+    wait();
 }
 
 void ClipBoard::pass(const PUnit &pu) {

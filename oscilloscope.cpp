@@ -5,6 +5,7 @@
 #include <QIcon>
 #include <QMenuBar>
 #include <QStatusBar>
+#include <QDebug>
 void Oscilloscope::createToolBarControls(ActionsOscilloscope *action)
 {
     pToolControls_ = new QToolBar("controls");
@@ -162,6 +163,12 @@ Oscilloscope::Oscilloscope(QVector<qint32> chs, QString title, QWidget *parent):
     //    clip_->passWriteTask(wrTask);
     connect(screen_, SIGNAL(position(QString,QString)), this, SLOT(setInfoCursorPosition(QString,QString)));
     clip_->start();
+}
+
+Oscilloscope::~Oscilloscope()
+{
+    qDebug() << "Начало уничтожения потока clip_";
+    qDebug() << "Был уничтожен поток clip_";
 }
 
 void Oscilloscope::pass(const shared_ptr<Unit> &pu)

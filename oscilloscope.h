@@ -17,7 +17,7 @@ class Oscilloscope : public QMainWindow /* класс, представляющ�
     Q_OBJECT
 public:
     Oscilloscope(QVector<qint32> chs,QString title, QWidget *parent = 0);
-    ~Oscilloscope(){}
+    ~Oscilloscope();
     void pass(const shared_ptr<Unit>& pu);  //передача очередного блока данных на обработку
 private:
     QVector<qint32> chs_;    //хранит идентификаторы каналов

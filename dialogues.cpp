@@ -602,7 +602,7 @@ void SettingSignalChannel::disable()
 
 SettingSignal::SettingSignal(const QVector<qint32> &chs, ScreenWidget& screen, QWidget *parent):QDialog(parent)
 {
-    std::default_random_engine dre(3060);
+    std::default_random_engine dre(3061);
     std::uniform_int_distribution<unsigned int> di;
     std::map<qint32, ParamSignal> signalsParam;
     foreach (qint32 idx, chs) {
