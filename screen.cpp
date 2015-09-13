@@ -783,3 +783,76 @@ void CacheScales::initialize(const Screen::AreaVisualization &area)
     queueScales_.clear();
     queueScales_.push_back(area);
 }
+
+
+
+QColor Cursor::getColor() const
+{
+    return color_;
+}
+QPen Cursor::getPen() const
+{
+    QPen pen(getColor());
+    pen.setWidth(5);
+    return pen;
+}
+
+void Cursor::draw(QPainter &painter, const QRectF &rect, qreal coord, const QString &mes)
+{
+    bool coordIsChange = false;
+    rect_ = rect;
+    if(coord_ != coord) {
+        coord_ = coord;
+        coordIsChange = true;
+    }
+    //изобразить курсор
+    painter.save();
+    painter.setPen(getPen());
+    drawCursor(painter);
+    //изобразить надпись к курсору
+    painter.rotate(getAngleLegend());
+    painter.drawText(getPositionLegend(), mes);
+    painter.restore();
+    if(coordIsChange)
+        emit changeCoordinate(coord_);
+}
+
+bool Cursor::is_containts(const QPointF &point) const
+{
+    return getSpaceUsed().contains(point);
+}
+
+void HorizontalCursor::drawCursor(QPainter &painter)
+{
+    if(!rect_.contains(rect_.left(),coord_))
+        return;
+    painter.translate(rect_.left(), coord_);
+    painter.scale(rect_.width()/SIDE_ORIG_RECT, rect_.height()/SIDE_ORIG_RECT);
+    painter.drawPath(arrows_);
+}
+
+HorizontalCursor::HorizontalCursor(const QColor &color, QObject *pobj): Cursor(color, pobj)
+{
+    //рисование стрелки
+    arrows_.moveTo(0, 0);
+    arrows_.lineTo(5, -5);
+    arrows_.lineTo(5, 5);
+    arrows_.lineTo(0,0);
+    arrows_.moveTo(5,0);
+    arrows_.lineTo(SIDE_ORIG_RECT - 5, 0);
+    arrows_.moveTo(SIDE_ORIG_RECT, 0);
+    arrows_.lineTo(SIDE_ORIG_RECT - 5,5);
+    arrows_.lineTo(SIDE_ORIG_RECT - 5, -5);
+    arrows_.lineTo(SIDE_ORIG_RECT,0);
+}
+
+QPointF HorizontalCursor::getPositionLegend() const
+{
+    return QPointF(5, 0);
+}
+
+QRectF HorizontalCursor::getSpaceUsed()
+{
+    return QRect(rect_.left(), coord_ - 5 *(rect_.height()/SIDE_ORIG_RECT), rect_.width(),
+                 10 * (rect_.height()/SIDE_ORIG_RECT));
+}

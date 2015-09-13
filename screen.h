@@ -186,5 +186,42 @@ signals:
     void enableRedo(bool);
 };
 
+class Cursor: public QObject  {
+    Q_OBJECT
+protected:
+    QColor color_;  //цвет курсора
+    QRectF rect_;    //прямоугольник, в пределах которого оперирует курсор
+    qreal coord_;   //координата, на которую указывает курсор
+private:
+    virtual void drawCursor(QPainter& painter) = 0;    //нарисовать курсор
+public:
+    Cursor(const QColor& color, QObject* pobj = 0): QObject(pobj), color_(color) {
+    }
+    void setColor(const QColor& color){
+        color_ = color;
+    }
+    QPen getPen(void) const;
+    virtual QRectF getSpaceUsed(void) const = 0;    //возвратить координаты пространства, занимаемого курсором
+    virtual bool is_containts(const QPointF& point) const; //принадлежит ли точка области курсора
+    QColor getColor() const;    //возвращает цвет курсора
+    virtual QPointF getPositionLegend(void) const = 0; //возвращает левый край базовой линии подписи к курсору
+    virtual qreal getAngleLegend(void) const = 0; //возвращает угол написания подписи к курсору
+public:
+    void draw(QPainter& painter, const QRectF& rect, qreal coord,
+                      const QString& mes = "");  //нарисовать курсор в области rect с указанием на координату coord c надписью mes
+signals:
+    void changeCoordinate(qreal newCoord);
+};
+
+class HorizontalCursor: public Cursor {
+    Q_OBJECT
+    const qreal SIDE_ORIG_RECT = 100;
+    QPainterPath arrows_;   //стрелка курсора
+    virtual void drawCursor(QPainter& painter);
+public:
+    HorizontalCursor(const QColor& color, QObject* pobj = 0);
+    virtual QPointF getPositionLegend(void) const;
+    virtual QRectF getSpaceUsed(void);
+};
 
 #endif // SCREEN_H
